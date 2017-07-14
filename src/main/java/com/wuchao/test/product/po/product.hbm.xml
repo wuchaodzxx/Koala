@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<!-- 
+			Created by the Middlegen Hibernate plugin 2.1
+
+			http://boss.bekk.no/boss/middlegen/
+			http://www.hibernate.org/
+		-->
+
+	<class name="com.wuchao.test.product.po.Product"
+		table="PRODUCT">
+		<meta attribute="class-description" inherit="false">
+			@hibernate.class table="PRODUCT"
+		</meta>
+
+		<id name="productId" type="java.lang.Integer" column="id">
+			<meta attribute="field-description">
+				@hibernate.id generator-class="identity"
+				type="java.lang.Integer" column="id"
+			</meta>
+			<generator class="identity" />
+		</id>
+		<property name="productName" type="java.lang.String"
+			column="productName" length="60">
+			<meta attribute="field-description">
+				@hibernate.property column="productName" length="60"
+			</meta>
+		</property>
+		
+		<property name="price" type="java.lang.Integer"
+			column="price" length="10">
+			<meta attribute="field-description">
+				@hibernate.property column="price" length="10"
+			</meta>
+		</property>
+		
+
+	</class>
+</hibernate-mapping>

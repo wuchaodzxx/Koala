@@ -1,0 +1,3 @@
+登陆用户：session.setAttribute("user", user);
+验证码：session.setAttribute("VerifyCode", s);
+系统对象：session.setAttribute("System", isystem);

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+                           http://www.springframework.org/schema/mvc 
+                           http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+                           http://www.springframework.org/schema/cache
+						   http://www.springframework.org/schema/cache/spring-cache.xsd 
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context-4.0.xsd
+                           http://www.springframework.org/schema/jee 
+                           http://www.springframework.org/schema/jee/spring-jee-4.0.xsd">
+
+	<!-- 设置使用注解的类所在的jar包 将带有@Component、@Repository、@Service、@Controller标签的类自动注册到spring容器。 
+		对标记了 Spring's @Required、@Autowired、JSR250's @PostConstruct、@PreDestroy、 @Resource、JAX-WS's 
+		@WebServiceRef、EJB3's @EJB、JPA's @PersistenceContext、 @PersistenceUnit等注解的类进行对应的操作使注解生效（包含了annotation-config标签的作用）。 -->
+	<!-- 用于静态资源的访问，否则无法访问静态资源 -->
+	<mvc:default-servlet-handler />
+	
+	<!-- 设置使用注解的类所在的jar包 将带有@Component、@Repository、@Service、@Controller标签的类自动注册到spring容器。 
+		对标记了 Spring's @Required、@Autowired、JSR250's @PostConstruct、@PreDestroy、 @Resource、JAX-WS's 
+		@WebServiceRef、EJB3's @EJB、JPA's @PersistenceContext、 @PersistenceUnit等注解的类进行对应的操作使注解生效（包含了annotation-config标签的作用）。 -->
+	<mvc:annotation-driven />
+
+	<context:component-scan base-package="com.wuchao" />
+
+	
+
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean"> 
+		<property name="jndiName"> <value>java:/comp/env/jdbc/BlogDB</value> </property> 
+	</bean> 
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="configLocation">
+			<value>classpath:com/wuchao/config/hibernateConfig/hibernate.cfg.xml
+			</value>
+		</property>
+		<property name="packagesToScan" value="com.wuchao.blog" />
+	</bean>
+	<!-- 配置Spring声明式事务 -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<!-- 配置 Annotation 驱动，扫描@Transactional注解的类定义事务 -->
+	<tx:annotation-driven transaction-manager="transactionManager"
+		proxy-target-class="true" />
+
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/view/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<!-- 将Controller抛出的异常转到特定View,异常映射处理器 -->
+	<bean
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<!-- 定义异常处理页面用来获取异常信息的变量名，默认名为exception -->
+		<!--<property name="exceptionAttribute" value="ex"></property> -->
+		<property name="exceptionMappings">
+			<props>
+				<prop key="com.wuchao.utils.exception.DAOException">errors/dao_error</prop>
+				<prop key="java.lang.Throwable">errors/500</prop>
+			</props>
+		</property>
+	</bean>
+	<!-- 拦截器 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<!-- 匹配的是url路径， 如果不配置或/**,将拦截所有的Controller -->
+			<mvc:mapping path="/**" /> 
+			<!-- 拦截器类 -->
+			<bean class="com.wuchao.utils.interceptor.RequestInterceptor"></bean>
+		</mvc:interceptor>
+		<!-- 当设置多个拦截器时，先按顺序调用preHandle方法，然后逆序调用每个拦截器的postHandle和afterCompletion方法 -->
+	</mvc:interceptors>
+
+	<!-- 导入bean配置文件xml -->
+	<import resource="classpath:/com/wuchao/test/product/springconfig/productbeans.xml" />
+
+
+
+</beans>
