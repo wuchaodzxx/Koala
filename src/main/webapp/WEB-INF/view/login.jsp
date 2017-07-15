@@ -36,15 +36,15 @@ body {
 </script>
 </head>
 <body class='layui-bg-black'>
-		<div class='layui-main' style="width: 100%; height: 40px">
+		<div class='layui-main' style="width: 100%; ">
 		<div style="float: right;BACKGROUND-COLOR: transparent">
 			<ul class="layui-nav" lay-filter="" style="BACKGROUND-COLOR: transparent">
 				<li class="layui-nav-item">
-					<a href="/Koala/registerRequest">
+					<a href="/Koala/register">
 						<font style="font-weight:bold;">注册</font>
 					</a>
 				</li>
-				<div class="layui-nav" style="display: inline-block;BACKGROUND-COLOR: transparent">
+				<div class="layui-nav" style="margin-left:-20px;display: inline-block;BACKGROUND-COLOR: transparent">
 					<div class="layui-inline" style="margin-top: 6px;BACKGROUND-COLOR: transparent">
 						<div class="layui-inline" style="width: 40px; height: 40px;BACKGROUND-COLOR: transparent">
 							<img style="width: 100%;"
@@ -58,7 +58,7 @@ body {
 		</div>
 	</div>
 	<div class='layui-main' style="width: 400px; height: 150px"></div>
-	<div class='layui-main' style="width: 400px">
+	<div class='layui-main' style="width: 400px;height:212px;">
 		<form class="layui-form" style="BACKGROUND-COLOR: transparent" action="">
 			<table class="" style="BACKGROUND-COLOR: transparent">
 				<tbody>

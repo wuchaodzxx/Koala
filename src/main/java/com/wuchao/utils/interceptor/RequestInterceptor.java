@@ -28,7 +28,7 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request,
             HttpServletResponse response, Object handler) throws Exception {
 		try {
-			log.info("RequestInterceptor");
+			log.info("RequestInterceptor:RemoteAddr="+request.getRemoteAddr()+",ContextPath="+request.getContextPath());
 			//网站访问量+1
 			if(isystem==null) {
 				log.info("isystem==null");

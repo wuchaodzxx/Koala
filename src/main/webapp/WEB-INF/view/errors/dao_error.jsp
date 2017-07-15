@@ -21,11 +21,8 @@ body {
 </head>
 <body class='layui-bg-black'>
 	<div class='layui-main' style="width: 700px; height: 150px">
-		
-		<div style="text-align:center;padding-top:100px">
-			<font style="color:#FFFFFF" size="200px"></font>
-		</div>
-		<br/><br/><br/><br/>
+		<div class='layui-main' style="width: 30px; height: 150px"></div>
+
 		<img alt="" src="/Koala/resources/images/tagIco/error.png"/>
 		<font style="color:#FFFFFF" size="20px" >数据库操作错误！</font>
 	</div>

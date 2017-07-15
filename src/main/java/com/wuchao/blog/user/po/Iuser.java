@@ -28,8 +28,46 @@ public class Iuser implements Serializable {
 	
 	@Column(name = "age")
 	private Integer age;
+	
+	@Column(name = "nickname")
+	private String nickname;
+	
+	@Column(name = "email")
+	private String email;
+	
+	@Column(name = "phone")
+	private String phone;
+	
+	//头像地址
+	@Column(name = "portrait")
+	private String portrait;
+	
 
 	public Iuser() {}
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public String getPortrait() {
+		return portrait;
+	}
+	public void setPortrait(String portrait) {
+		this.portrait = portrait;
+	}
 	public Iuser(String username,String password ,int age) {
 		this.username=username;
 		this.age=age;

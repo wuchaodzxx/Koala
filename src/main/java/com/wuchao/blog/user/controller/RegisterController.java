@@ -22,17 +22,47 @@ public class RegisterController{
 	
 	@Resource(name="iuserBo")
 	public IuserBo iuserBo;
-	
-    @RequestMapping("/registerRequest")
-    public String logout(HttpServletResponse response,HttpServletRequest request,HttpSession session) throws DAOException {
-    	return "/register";
-    }
-    
 	//注册
     @RequestMapping("/register")
     public String register(HttpServletResponse response,HttpServletRequest request,HttpSession session) throws DAOException {
+    	String username = request.getParameter("username");
+    	String password = request.getParameter("password");
+    	String varifycode = request.getParameter("varifycode");
+    	String formResult=null;//用于返回表单验证信息
+    	log.info("接收到注册请求:username="+username+",password="+password+",varifycode="+varifycode);
+    	//校验注册请求是否携带所需要的请求参数参数
+    	if(username==null || username.trim().equals("")
+    			||password==null || password.trim().equals("")
+    			||varifycode==null || varifycode.trim().equals("")) {
+    		request.setAttribute("formResult", null);
+    		return "register";
+    	}
     	
-    	return "";
+    	//获取seeion中的验证码
+    	String VerifyCode = (String) session.getAttribute("VerifyCode");
+    	
+    	//获取session中的验证码失败
+    	if(VerifyCode==null) {
+    		return "errors/500";
+    	}
+    	
+    	//如果验证码不正确
+    	if(!VerifyCode.equalsIgnoreCase(varifycode)) {
+    		log.error("验证码不正确");
+    		formResult="验证码不正确";
+    		request.setAttribute("formResult", formResult);
+    		return "register";
+    	}
+    	Iuser user = new Iuser();
+    	user.setUsername(username);
+    	user.setPassword(password);
+    	
+    	iuserBo.addIuser(user);
+    	return "redirect:/registerSuccsess";
+    }
+    @RequestMapping("/registerSuccsess")
+    public String registerSuccsess(HttpServletResponse response,HttpServletRequest request,HttpSession session) throws DAOException {
+    	return "registerSuccsess";
     }
 
 }

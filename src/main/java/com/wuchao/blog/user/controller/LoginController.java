@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.wuchao.blog.user.bo.intf.IuserBo;
 import com.wuchao.blog.user.po.Iuser;
@@ -44,7 +45,10 @@ public class LoginController{
     	
     	//获取session中的验证码失败
     	if(VerifyCode==null) {
-    		return "errors/500";
+    		log.error("服务器session获取不到验证码");
+    		formResult="验证码不正确";
+    		request.setAttribute("formResult", formResult);
+    		return "login";
     	}
     	
     	//如果验证码不正确
@@ -52,6 +56,7 @@ public class LoginController{
     		log.error("验证码不正确");
     		formResult="验证码不正确";
     		request.setAttribute("formResult", formResult);
+    		session.setAttribute("VerifyCode", null);//验证码清除，只能使用一次
     		return "login";
     	}
     	//如果用户不存在或者密码不正确
@@ -59,11 +64,13 @@ public class LoginController{
     		log.error("用户不存在或密码不正确");
     		formResult="用户不存在或密码不正确";
     		request.setAttribute("formResult", formResult);
+    		session.setAttribute("VerifyCode", null);//验证码清除，只能使用一次
     		return "login";
     	}
     	request.setAttribute("formResult", null);
     	session.setAttribute("user", user);
-    	return "redirect:/home";
+    	session.setAttribute("VerifyCode", null);//验证码清除，只能使用一次
+    	return "redirect:/"+user.getUsername()+"/home";
     }
     @RequestMapping("/logout")
     public String logout(HttpServletResponse response,HttpServletRequest request,HttpSession session) throws DAOException {
@@ -73,8 +80,10 @@ public class LoginController{
     /*
      * 请求index.jsp页面
      */
-    @RequestMapping("/home")
-    public String home(HttpServletResponse response,HttpServletRequest request,HttpSession session) {
+    @RequestMapping("/{userName}/home")
+    public String home(@PathVariable String userName,HttpServletResponse response,HttpServletRequest request,HttpSession session) {
+    	//访问主页面，先判断是否传入userID参数，如果传入了，则访问指定用户的index.jsp，否则默认访问本人的index.jsp
+    	log.info("请求目标用户："+userName);
     	return "index";
     }
     /*

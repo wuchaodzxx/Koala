@@ -38,7 +38,7 @@ body {
 <body class='layui-bg-black'>
 	<div class='layui-main' style="width: 400px; height: 150px"></div>
 	<div class='layui-main' style="width: 400px">
-		<form class="layui-form" style="BACKGROUND-COLOR: transparent" action="">
+		<form class="layui-form" style="BACKGROUND-COLOR: transparent" action="/Koala/register">
 			<table class="" style="BACKGROUND-COLOR: transparent">
 				<tbody>
 					<tr>
@@ -67,7 +67,7 @@ body {
 							</div>
 						</td>
 						<td></td>
-					</tr>
+					</tr>					
 					<tr>
 						<td><div  style="height: 10px"></div></td>
 						<td></td>
@@ -88,6 +88,26 @@ body {
 
 						<td></td>
 					</tr>
+<tr>
+						<td><div  style="height: 10px"></div></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<label class="layui-form-label">
+								<font color="#FFFFFF" style="font-family:SimHei">密码确认</font>
+							</label>
+						</td>
+						<td>
+							<div class="layui-input-inline">
+								<input id="passwordConfirm" name="passwordConfirm" lay-verify="required" autocomplete="off"
+									class="layui-input" type="password">
+							</div>
+						</td>
+
+						<td></td>
+					</tr>					
 					<tr>
 						<td><div  style="height: 10px"></div></td>
 						<td></td>
@@ -135,8 +155,14 @@ body {
 
 							//监听提交
 							form.on('submit(demo1)', function(data) {
+								//密码和确认密码校验
+								if(data.field.password!=data.field.passwordConfirm){
+									layer.msg("两次密码不一致");
+									return false;
+								}
 								var password = hex_md5(data.field.password,32);
 								document.getElementById("password").value = password;
+								document.getElementById("passwordConfirm").value = password;
 								return true;
 							});
 
