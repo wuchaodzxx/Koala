@@ -13,4 +13,5 @@ public interface IarticleDao {
 	public List<Iarticle> queryPageByUserName(String username,int offset, int length)throws DAOException;
 	public void deleteIarticle(int id)throws DAOException;
 	public int getAllRowCount(String username)throws DAOException;
+	public List<Iarticle> getArticleListByArticleLabelId(int articleLabelId)throws DAOException;
 }

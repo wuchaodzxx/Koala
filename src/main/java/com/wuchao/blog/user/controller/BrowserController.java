@@ -91,6 +91,22 @@ public class BrowserController {
     	}
     	Iarticle  article = iarticleBo.getIarticleById(articleId);
     	request.setAttribute("article", article);
+    	request.setAttribute("TargetUserName", userName);
+    	return "article/showArticle";
+    }
+    //${TargetUserName}/browserByLabel
+    /*
+     * 请求标签页
+     */
+    @RequestMapping("/{userName}/browserByLabel")
+    public String browserByLabel(@PathVariable String userName,
+    					HttpServletResponse response,
+    					HttpServletRequest request,
+    					HttpSession session) throws DAOException {
+    	log.info("browser 请求目标用户："+userName);
+
+
+    	request.setAttribute("TargetUserName", userName);
     	return "article/showArticle";
     }
 }

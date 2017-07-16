@@ -19,7 +19,7 @@ public class Iarticle implements Serializable{
 	private Integer id;
 	
 	@Column(name = "userId")
-	private String userId;
+	private int userId;
 	
 	@Column(name = "username")
 	private String username;
@@ -39,8 +39,8 @@ public class Iarticle implements Serializable{
 	private String title;
 	
 	//类别
-	@Column(name = "category")
-	private String category;
+	@Column(name = "labelId")
+	private int labelId;
 	
 	//阅读数
 	@Column(name = "browsers")
@@ -51,7 +51,7 @@ public class Iarticle implements Serializable{
 	private int comments=0;
 	
 	
-	//类别
+	//摘要
 	@Column(name = "abstractsDesc")
 	private String abstractsDesc;
 	
@@ -63,11 +63,11 @@ public class Iarticle implements Serializable{
 		this.id = id;
 	}
 
-	public String getUserId() {
+	public int getUserId() {
 		return userId;
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(int userId) {
 		this.userId = userId;
 	}
 
@@ -111,14 +111,6 @@ public class Iarticle implements Serializable{
 		this.title = title;
 	}
 
-	public String getCategory() {
-		return category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
 	public int getBrowsers() {
 		return browsers;
 	}
@@ -141,6 +133,14 @@ public class Iarticle implements Serializable{
 
 	public void setAbstractsDesc(String abstractsDesc) {
 		this.abstractsDesc = abstractsDesc;
+	}
+
+	public int getLabelId() {
+		return labelId;
+	}
+
+	public void setLabelId(int labelId) {
+		this.labelId = labelId;
 	}
 
 	

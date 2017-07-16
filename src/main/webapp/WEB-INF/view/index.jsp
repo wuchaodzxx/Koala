@@ -17,7 +17,7 @@
 a.hover-color:hover {
 	color: red;
 }
-.contentDiv{color:#000;border:4px solid #cccccc;} /* 默认的样式 */
+.contentDiv{color:#000;border:2px solid #cccccc;} /* 默认的样式 */
 .contentDiv:hover{border-color:#169fe6;} /* 鼠标经过时的样式 */
 </style>
 <title>主页</title>
@@ -28,11 +28,11 @@ a.hover-color:hover {
 	<div class='layui-main' style="width: 100%; height: 80px">
 		<div style="float: right">
 			<ul class="layui-nav" lay-filter="">
-				<li class="layui-nav-item layui-this"><a href="">主页</a></li>
+				<li class="layui-nav-item layui-this"><a href="/Koala/${TargetUserName}/home">主页</a></li>
 				<li class="layui-nav-item "><a href="">博客</a></li>
 				<li class="layui-nav-item"><a href="">关于</a></li>
 				<li class="layui-nav-item"><a href="/Koala/manager">管理</a></li>
-				<div class="layui-nav" style="display: inline-block;">
+				<div style="display: inline-block;">
 					<div class="layui-inline " style="margin-top: 6px;">
 						<div class="layui-inline" style="width: 40px; height: 40px">
 							<img style="width: 100%;"
@@ -48,6 +48,7 @@ a.hover-color:hover {
 	<div class='layui-main' style="width: 100%; height: 20px"></div>
 
 	<div class='main' style="width: 100%;">
+		
 		<div style="width: 70%; margin: 0 auto">
 				<!-- 下面显示列表 -->
 				<div id="list" class='layui-main' style="width: 100%;background-color:#cccccc">
@@ -102,7 +103,6 @@ a.hover-color:hover {
 					<div id="PagingBar"></div>
 				</div>
 			</div>
-
 	</div>
 
 

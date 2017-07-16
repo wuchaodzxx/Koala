@@ -64,4 +64,10 @@ public class IarticleBoImpl implements IarticleBo {
 		return iarticleDao.getAllRowCount(username);
 	}
 
+	@Override
+	public List<Iarticle> getArticleListByArticleLabelId(int articleLabelId) throws DAOException {
+		// TODO Auto-generated method stub
+		return iarticleDao.getArticleListByArticleLabelId(articleLabelId);
+	}
+
 }

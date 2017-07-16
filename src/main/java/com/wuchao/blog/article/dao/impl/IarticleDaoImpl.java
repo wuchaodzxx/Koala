@@ -131,5 +131,16 @@ public class IarticleDaoImpl extends HibernateDaoSupport implements IarticleDao 
 			throw new DAOException();
 		}
 	}
+	@Override
+	public List<Iarticle> getArticleListByArticleLabelId(int articleLabelId) throws DAOException {
+		List<Iarticle> list = null;
+		try {
+	        list = (List<Iarticle>) this.getHibernateTemplate().find("from Iarticle u where u.labelId=? order by u.modifyDate desc",articleLabelId); 
+		}catch(Exception e) {
+			log.error(e.getMessage());
+			throw new DAOException();
+		}	
+		return list;
+	}
 
 }

@@ -28,7 +28,7 @@ a.hover-color:hover {
 	<div class='layui-main' style="width: 100%; height: 80px">
 		<div style="float: right">
 			<ul class="layui-nav" lay-filter="">
-				<li class="layui-nav-item "><a href="">主页</a></li>
+				<li class="layui-nav-item "><a href="/Koala/${TargetUserName}/home">主页</a></li>
 				<li class="layui-nav-item "><a href="">博客</a></li>
 				<li class="layui-nav-item"><a href="">关于</a></li>
 				<li class="layui-nav-item"><a href="/Koala/manager">管理</a></li>
