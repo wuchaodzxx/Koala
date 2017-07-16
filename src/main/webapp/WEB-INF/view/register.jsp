@@ -127,7 +127,7 @@ body {
 						</td>
 						<td>
 							<div style="margin-left:10px">
-								<img id="varifyCodeID" onclick="reloadVaryfiCode()" src="/Koala/login/getVerifyCode" alt="加载失败" />
+								<img id="varifyCodeID" onclick="reloadVaryfiCode()" src="/Koala/login/getVerifyCode" alt="" />
 							</div>
 						</td>
 					</tr>

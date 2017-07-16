@@ -1,3 +1,4 @@
 登陆用户：session.setAttribute("user", user);
 验证码：session.setAttribute("VerifyCode", s);
 系统对象：session.setAttribute("System", isystem);
+访问资源的目标对象：session.setAttribute("TargetUserName", username);如果该username和当前用户的username相同，则为访问自己的资源

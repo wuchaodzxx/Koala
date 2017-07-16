@@ -77,15 +77,7 @@ public class LoginController{
     	session.setAttribute("user", null);
     	return "redirect:/login";
     }
-    /*
-     * 请求index.jsp页面
-     */
-    @RequestMapping("/{userName}/home")
-    public String home(@PathVariable String userName,HttpServletResponse response,HttpServletRequest request,HttpSession session) {
-    	//访问主页面，先判断是否传入userID参数，如果传入了，则访问指定用户的index.jsp，否则默认访问本人的index.jsp
-    	log.info("请求目标用户："+userName);
-    	return "index";
-    }
+    
     /*
      * 
      *返回验证码图像
