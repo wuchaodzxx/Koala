@@ -3,6 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page isELIgnored="false"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -17,8 +18,8 @@
 a.hover-color:hover {
 	color: red;
 }
-.contentDiv{color:#000;border:2px solid #cccccc;} /* 默认的样式 */
-.contentDiv:hover{border-color:#169fe6;} /* 鼠标经过时的样式 */
+.contentDiv{color:#000;border:0px solid #393d49;} /* 默认的样式 */
+.contentDiv:hover{color:#000;border:1px solid #169fe6;} /* 鼠标经过时的样式 */
 </style>
 <title>主页</title>
 <script src="/Koala/layui/layui.js" charset="utf-8"></script>
@@ -51,7 +52,7 @@ a.hover-color:hover {
 		
 		<div style="width: 70%; margin: 0 auto">
 				<!-- 下面显示列表 -->
-				<div id="list" class='layui-main' style="width: 100%;background-color:#cccccc">
+				<div id="list" class='layui-main' style="width: 100%;background-color:#cccccc;background: rgba(0, 0, 0, 0);">
 					<!-- 以下为列表模板 
 					<div class="contentDiv">
 						<fieldset class="layui-elem-field layui-field-title">
@@ -83,19 +84,19 @@ a.hover-color:hover {
 									</a>
 								</blockquote>
 								<div style="font-family:'楷体';font-size:15px;">
-									<div class="layui-field-box">
+									<div class="layui-field-box" style="color:#ffffff">
 										<div>
-											${article.abstractsDesc}
+											摘要：${article.abstractsDesc}
 											<a href="/Koala/${TargetUserName}/browser?articleId=${article.id}" style="font-size:20px;color:#169fe6">
 												阅读全文
 											</a>
 										</div>
 									</div>
-									<div>posted @ ${article.modifyDate} ${article.username} 阅读(${article.browsers}) 评论(${article.comments})  </div>
+									<div style="color:#ffffff">posted @ <fmt:formatDate type="date" value="${article.modifyDate}" pattern="yyyy-MM-dd HH:mm:ss"/>  ${article.username} 阅读(${article.browsers}) 评论(${article.comments})  </div>
 								</div>
 							</fieldset>
 						</div>	
-						
+					<br/>	
 					</c:forEach>				
 				</div>				
 				<!-- 分页控件 -->
