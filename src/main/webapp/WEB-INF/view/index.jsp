@@ -20,15 +20,16 @@ a.hover-color:hover {
 }
 .contentDiv{color:#000;border:0px solid #393d49;} /* 默认的样式 */
 .contentDiv:hover{color:#000;border:1px solid #169fe6;} /* 鼠标经过时的样式 */
+.touming{background: rgba(0, 0, 0, 0);}/* 设置透明 */
 </style>
 <title>主页</title>
 <script src="/Koala/layui/layui.js" charset="utf-8"></script>
 <script src="/Koala/js/jquery-3.2.1.min.js" charset="utf-8"></script>
 </head>
 <body class='layui-bg-black'>
-	<div class='layui-main' style="width: 100%; height: 80px">
-		<div style="float: right">
-			<ul class="layui-nav" lay-filter="">
+	<div class='layui-main touming' style="width: 100%; height: 80px;">
+		<div style="float: right;background: rgba(0, 0, 0, 0);">
+			<ul class="layui-nav touming" lay-filter="">
 				<li class="layui-nav-item layui-this"><a href="/Koala/${TargetUserName}/home">主页</a></li>
 				<li class="layui-nav-item "><a href="">博客</a></li>
 				<li class="layui-nav-item"><a href="">关于</a></li>
@@ -52,7 +53,7 @@ a.hover-color:hover {
 		
 		<div style="width: 70%; margin: 0 auto">
 				<!-- 下面显示列表 -->
-				<div id="list" class='layui-main' style="width: 100%;background-color:#cccccc;background: rgba(0, 0, 0, 0);">
+				<div id="list" class='layui-main touming' style="width: 100%;">
 					<!-- 以下为列表模板 
 					<div class="contentDiv">
 						<fieldset class="layui-elem-field layui-field-title">
@@ -100,7 +101,7 @@ a.hover-color:hover {
 					</c:forEach>				
 				</div>				
 				<!-- 分页控件 -->
-				<div class='layui-main' style="width: 100%;text-align:right">
+				<div class='layui-main' style="width: 100%;text-align:right;">
 					<div id="PagingBar"></div>
 				</div>
 			</div>
