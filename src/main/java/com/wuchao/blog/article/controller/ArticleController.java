@@ -149,8 +149,31 @@ public class ArticleController {
     		log.info("创建新博客请求失败：用户未登录，跳转登陆页面");
     		return "redirect:/login";
     	}
+    	
     	//用户存在
+    	List<IarticleLabel> iarticleLabelList = iarticleLabelBo.getIarticleLabelListByUserId(user.getId());
+    	
+    	request.setAttribute("IarticleLabelList", iarticleLabelList);
+    	
     	log.info("创建新博客请求成功，跳转创建新博客页面");
     	return "/article/newArticle";
+    }
+	//创建新博客
+    @RequestMapping("/newArticleSubmit")
+    public void newArticleSubmit(HttpServletResponse response,HttpServletRequest request,HttpSession session) throws DAOException, IOException {
+    	log.info("提交新博客请求");
+    	Iuser user = (Iuser) session.getAttribute("user");
+    	
+    	//用户存在
+		String content = request.getParameter("content");
+		String articleTitle = request.getParameter("articleTitle");
+		String articleLabelId = request.getParameter("articleLabelId");
+		
+		log.info("articleTitle:"+articleTitle+"\n articleLabelId:"+articleLabelId+"\n content:"+content);
+    	
+		PrintWriter writer = response.getWriter();
+		writer.print("successful");
+		writer.flush();
+		writer.close();
     }
 }

@@ -87,4 +87,58 @@ public class BrowserController {
         
     	return "index";
     }
+    /*
+     * 请求index.jsp页面,请求路径中不含用户名的请求方式
+     */
+    @RequestMapping("/home")
+    public String home2(HttpServletResponse response,
+    					HttpServletRequest request,
+    					HttpSession session) throws DAOException {
+
+    	Iuser user = (Iuser) session.getAttribute("user");
+    	
+    	if(user==null) return "redirect:/login";
+    	
+    	String userName = user.getUsername();
+    	
+    	int pageSize = SystemConstant.PAGE_SIZE;//每页显示数目
+    	int currentPage = 1;//默认当前页
+    	int totalPages = 1;//默认总页数
+    	
+    	if(request.getParameter("currentPage")!=null) {
+    		currentPage = Integer.parseInt((String) request.getParameter("currentPage"));
+    	}
+    	if(request.getParameter("totalPages")!=null) {
+    		totalPages = Integer.parseInt((String) request.getParameter("totalPages"));
+    	}else {
+    		int totalRowCount = iarticleBo.getAllRowCount(userName);
+    		totalPages = (int) Math.ceil(totalRowCount/(double)pageSize);//向上取整
+    	}
+    	log.info("请求参数：totalPages="+totalPages+",currentPage="+currentPage+",pageSize="+pageSize);
+    	
+    	Page page = iarticleBo.queryPageByUserName(userName,Integer.valueOf(currentPage), pageSize);
+    	
+    	//获取目标用户信息，便于index.jsp展示
+    	Iuser targetUser = iuserBo.getIuserByUsername(userName);
+        
+    	//获取目标用户的标签列表
+    	List<IarticleLabel> articleLabelList = iarticleLabelBo.getIarticleLabelListByUserId(targetUser.getId());
+    	
+        List<Iarticle> articleList = page.getList();
+        request.setAttribute("page", page);
+        request.setAttribute("pageSize", pageSize);
+        request.setAttribute("articleList", articleList);
+        request.setAttribute("currentPage", currentPage);
+        request.setAttribute("totalPages", totalPages);
+        
+        
+    	//把目标用户名放入request,目标用户是指第三方访问的页面所属用户
+        request.setAttribute("TargetUserName", userName);
+        
+        request.setAttribute("TargetUser", targetUser);
+        
+        request.setAttribute("ArticleLabelList", articleLabelList);
+        
+    	return "index";
+    }
 }

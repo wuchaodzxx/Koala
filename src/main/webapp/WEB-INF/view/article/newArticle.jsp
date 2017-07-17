@@ -16,6 +16,11 @@
 <link rel="stylesheet" href="/Koala/layui/css/layui.css" media="all">
 <link href="/Koala/bs3/dpl.css" rel="stylesheet">
 <link href="/Koala/bs3/bui.css" rel="stylesheet">
+<link href="/Koala/zui/css/zui.min.css" rel="stylesheet">
+<!-- jQuery (ZUI中的Javascript组件依赖于jQuery) -->
+<script src="/Koala/js/jquery-3.2.1.min.js"></script>
+<!-- ZUI Javascript组件 -->
+<script src="/Koala/zui/js/zui.min.js"></script>
 <style>
 a.hover-color:hover {
 	color: red;
@@ -27,12 +32,18 @@ a.hover-color:hover {
 <title>新博客</title>
 <script src="/Koala/layui/layui.js" charset="utf-8"></script>
 <script src="/Koala/js/jquery-3.2.1.min.js" charset="utf-8"></script>
+<script src="/Koala/ckeditor_full/ckeditor.js" charset="utf-8"></script>
+<script>
+show=function(obj){
+	//alert(this);
+}
+</script>
 </head>
 <body class='layui-bg-black'>
 	<div class='layui-main touming' style="width: 100%; height: 80px;">
 		<div style="float: right;background: rgba(0, 0, 0, 0);">
 			<ul class="layui-nav touming" lay-filter="">
-				<li class="layui-nav-item"><a href="/Koala/${TargetUserName}/home">主页</a></li>
+				<li class="layui-nav-item"><a href="/Koala/${user.username}/home">主页</a></li>
 				<li class="layui-nav-item "><a href="/Koala/newArticle">新博客</a></li>
 				<li class="layui-nav-item"><a href="/Koala/manager">管理</a></li>
 				<li class="layui-nav-item"><a href="">联系</a></li>
@@ -53,11 +64,8 @@ a.hover-color:hover {
 
 	<div class='main' style="width: 100%;">
 		
-		<div style="width: 70%; margin-left:5%;float:left">
-				这里写文章
-		</div>
-		<!-- 右侧边栏satrt -->
-		<div style="width: 20%; margin-left:2.5%;float:left;">
+		<!-- 左侧边栏satrt -->
+		<div style="width: 20%; margin-left:2%;float:left;">
 			<div class="row" style="width: 100%;">
 	      		<div class="span12" style="width: 100%;">
 			        <div class="panel panel-primary">
@@ -65,18 +73,56 @@ a.hover-color:hover {
 			            <h3 class="pull-left">分类管理</h3>
 			          </div>
 			          <div class="panel-body" style="background-color:#f2f2f2">
-			           		 这里显示分类
+			           		     <section contextmenu="mymenu">
+									<c:forEach var="articleLabel" items="${IarticleLabelList}">
+						            	<a href="/Koala/${user.username}/browserByLabel?articleLabelId=${articleLabel.id}">
+											<font style="font-size:15px;">${articleLabel.name}(${articleLabel.articleNum})</font>
+										</a>
+						            	<br/><br/>
+						            </c:forEach>
+						            <font style="font-size:10px;color:#ff8800"> Tips:右键此处可编辑分类</font>
+								 </section>
+								<menu type="context" id="mymenu">
+									<menuitem label="编辑分类" onclick="show(this)" icon="/images/refresh-icon.png"></menuitem>
+								 </menu>
 			          </div>
 			        </div>
 			     </div>
    			</div>
    			
 		</div>
-		<!-- 右侧边栏end -->
+		<!-- 左侧边栏end -->
+		
+		<!-- 编辑区域start -->
+		<div style="width: 74%; margin-left:2%;float:left">
+			<div>
+			    <font style="color:#ffffff;">标题</font>
+			    <div style="height:30px;width:500px;">
+			      <input id="articleTitle" name="title"  class="layui-input" style="height:30px;width:500px;" placeholder="请输入标题"  type="text">
+			    </div>
+			 </div>
+			 <br/>
+			<textarea id="contentEdit" name="contentEdit"></textarea>
+			<br/><br/>
+			<div id="select" class="layui-nav">
+				<div class="" style="float:left;">
+				  <select id="articleLabel" style="height:38px" class="">
+				  	<c:forEach var="articleLabel" items="${IarticleLabelList}">
+				  		<option value="${articleLabel.id}">${articleLabel.name}</option> 
+				  	</c:forEach>
+				  </select>
+				</div>
+				<div style="float:left;margin-left:20px;">
+					<button class="layui-btn layui-btn-normal" onclick="submit()">提交</button>
+				</div>
+			</div>
+		</div>
+		<!-- 编辑区域end -->
 	</div>
 	
 	<div class="layui-footer footer footer-doc"
 		style="text-align: center; width: 100%; height: 100px; BACKGROUND-COLOR: transparent;clear:both">
+		<br/><br/>
 		<div class="layui-main" style="BACKGROUND-COLOR: transparent">
 			<p>
 				<font style="color: #ffffff">Copyright © 吴超的博客 2017
@@ -93,8 +139,49 @@ a.hover-color:hover {
 			</p>
 		</div>
 	</div>
-	
+
 	<script type="text/javascript" color="255,255,255" opacity='0.7'
 		zIndex="-2" count="200" src="/Koala/js/canvas-nest.js"></script>
 </body>
+<script>
+	// Replace the <textarea id="editor1"> with a CKEditor
+	// instance, using default configuration.
+	CKEDITOR.replace("contentEdit");
+	submit=function(){
+		var titleDiv = document.getElementById("articleTitle");
+		var labelDiv = document.getElementById("articleLabel");
+		var content = CKEDITOR.instances.contentEdit.getData();
+		var articleTitle = titleDiv.value;
+		var articleLabelId = labelDiv.value;
+		$.post("/Koala/newArticleSubmit",
+		  {
+		    "articleTitle":articleTitle,
+		    "articleLabelId":articleLabelId,
+		    "content":content
+		  },
+		  function(data,status){
+			  if(status=="success"){
+					layui.use('layer', function(){
+						  var layer = layui.layer;
+						  layer.msg('提交成功！', {
+							  time: 0 //不自动关闭
+							  ,btn: ['确定']
+							  ,yes: function(index){
+								  layer.close(index);
+								  window.location.href="/Koala/home";
+							  }
+							});
+						}); 
+			  }else{
+					layui.use('layer', function(){
+						  var layer = layui.layer;
+						  layer.msg('对不起，提交失败。失败原因：'+data);
+						}); 
+			  }
+		});
+		
+	}
+	//cke_contentEdit
+	//var cke_contentEdit = document.getElementById('cke_contentEdit'); 
+</script>
 </html>
