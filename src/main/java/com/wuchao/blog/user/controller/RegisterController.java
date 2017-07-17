@@ -2,6 +2,7 @@ package com.wuchao.blog.user.controller;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Date;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -26,12 +27,14 @@ public class RegisterController{
     @RequestMapping("/register")
     public String register(HttpServletResponse response,HttpServletRequest request,HttpSession session) throws DAOException {
     	String username = request.getParameter("username");
+    	String nickname = request.getParameter("nickname");
     	String password = request.getParameter("password");
     	String varifycode = request.getParameter("varifycode");
     	String formResult=null;//用于返回表单验证信息
     	log.info("接收到注册请求:username="+username+",password="+password+",varifycode="+varifycode);
     	//校验注册请求是否携带所需要的请求参数参数
     	if(username==null || username.trim().equals("")
+    			||nickname==null || nickname.trim().equals("")
     			||password==null || password.trim().equals("")
     			||varifycode==null || varifycode.trim().equals("")) {
     		request.setAttribute("formResult", null);
@@ -55,7 +58,10 @@ public class RegisterController{
     	}
     	Iuser user = new Iuser();
     	user.setUsername(username);
+    	user.setNickname(nickname);
     	user.setPassword(password);
+    	user.setCreatedate(new Date());
+    	user.setModifydate(new Date());
     	
     	iuserBo.addIuser(user);
     	return "redirect:/registerSuccsess";

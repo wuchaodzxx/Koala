@@ -1,6 +1,7 @@
 package com.wuchao.blog.user.po;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -42,6 +43,11 @@ public class Iuser implements Serializable {
 	@Column(name = "portrait")
 	private String portrait;
 	
+	@Column(name = "createdate")
+	private Date createdate;
+	
+	@Column(name = "modifydate")
+	private Date modifydate;
 
 	public Iuser() {}
 	public String getNickname() {
@@ -106,6 +112,18 @@ public class Iuser implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	public Date getCreatedate() {
+		return createdate;
+	}
+	public void setCreatedate(Date createdate) {
+		this.createdate = createdate;
+	}
+	public Date getModifydate() {
+		return modifydate;
+	}
+	public void setModifydate(Date modifydate) {
+		this.modifydate = modifydate;
 	}
 
 }

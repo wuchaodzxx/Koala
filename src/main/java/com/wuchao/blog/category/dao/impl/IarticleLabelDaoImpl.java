@@ -81,11 +81,11 @@ private static Logger log = Logger.getLogger(LoginController.class);
 	}
 
 	@Override
-	public IarticleLabel getArticleLabel(int articleLabelId, int userId) throws DAOException {
+	public IarticleLabel getArticleLabel(int articleLabelId) throws DAOException {
 		List list = null;
 		IarticleLabel articleLabel = null;
 		try {
-	        list = this.getHibernateTemplate().find("from IarticleLabel u where u.id=? and u.userId=?",articleLabelId,userId); 
+	        list = this.getHibernateTemplate().find("from IarticleLabel u where u.id=?",articleLabelId); 
 	        if(list!=null && list.size()>0) {
 				for (Iterator iter = list.iterator(); iter.hasNext();) {
 					articleLabel = (IarticleLabel) iter.next();

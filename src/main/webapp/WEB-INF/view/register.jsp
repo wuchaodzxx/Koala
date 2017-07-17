@@ -57,7 +57,7 @@ body {
 					<tr>
 						<td>
 							<label class="layui-form-label">
-								<font color="#FFFFFF" style="font-family:SimHei">用户名</font>
+								<font color="#FFFFFF" style="font-family:SimHei">账号</font>
 							</label>
 						</td>
 						<td>
@@ -67,7 +67,21 @@ body {
 							</div>
 						</td>
 						<td></td>
-					</tr>					
+					</tr>
+					<tr>
+						<td>
+							<label class="layui-form-label">
+								<font color="#FFFFFF" style="font-family:SimHei">昵称</font>
+							</label>
+						</td>
+						<td>
+							<div class="layui-input-inline">
+								<input name="nickname" lay-verify="required" autocomplete="off"
+									class="layui-input" type="tel" >
+							</div>
+						</td>
+						<td></td>
+					</tr>						
 					<tr>
 						<td><div  style="height: 10px"></div></td>
 						<td></td>

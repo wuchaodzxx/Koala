@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.wuchao.blog.article.bo.intf.IarticleBo;
 import com.wuchao.blog.article.po.Iarticle;
+import com.wuchao.blog.category.bo.intf.IarticleLabelBo;
+import com.wuchao.blog.category.po.IarticleLabel;
 import com.wuchao.blog.user.bo.intf.IuserBo;
 import com.wuchao.blog.user.po.Iuser;
 import com.wuchao.utils.constant.SystemConstant;
@@ -32,6 +34,8 @@ public class BrowserController {
 	@Resource(name="iarticleBo")
 	public IarticleBo iarticleBo;
 	
+	@Resource(name="iarticleLabelBo")
+	public IarticleLabelBo iarticleLabelBo;
     /*
      * 请求index.jsp页面
      */
@@ -59,7 +63,13 @@ public class BrowserController {
     	log.info("请求参数：totalPages="+totalPages+",currentPage="+currentPage+",pageSize="+pageSize);
     	
     	Page page = iarticleBo.queryPageByUserName(userName,Integer.valueOf(currentPage), pageSize);
+    	
+    	//获取目标用户信息，便于index.jsp展示
+    	Iuser targetUser = iuserBo.getIuserByUsername(userName);
         
+    	//获取目标用户的标签列表
+    	List<IarticleLabel> articleLabelList = iarticleLabelBo.getIarticleLabelListByUserId(targetUser.getId());
+    	
         List<Iarticle> articleList = page.getList();
         request.setAttribute("page", page);
         request.setAttribute("pageSize", pageSize);
@@ -67,46 +77,14 @@ public class BrowserController {
         request.setAttribute("currentPage", currentPage);
         request.setAttribute("totalPages", totalPages);
         
+        
     	//把目标用户名放入request,目标用户是指第三方访问的页面所属用户
         request.setAttribute("TargetUserName", userName);
+        
+        request.setAttribute("TargetUser", targetUser);
+        
+        request.setAttribute("ArticleLabelList", articleLabelList);
+        
     	return "index";
-    }
-    
-    //${TargetUserName}/browser?articleId
-    /*
-     * 请求指定article页面
-     */
-    @RequestMapping("/{userName}/browser")
-    public String browser(@PathVariable String userName,
-    					HttpServletResponse response,
-    					HttpServletRequest request,
-    					HttpSession session) throws DAOException {
-    	log.info("browser 请求目标用户："+userName);
-    	int articleId;
-    	String articleIdStr = request.getParameter("articleId");
-    	try {
-    		articleId = Integer.valueOf(articleIdStr);
-    	}catch(Exception e) {
-    		return "errors/articleNotFound";
-    	}
-    	Iarticle  article = iarticleBo.getIarticleById(articleId);
-    	request.setAttribute("article", article);
-    	request.setAttribute("TargetUserName", userName);
-    	return "article/showArticle";
-    }
-    //${TargetUserName}/browserByLabel
-    /*
-     * 请求标签页
-     */
-    @RequestMapping("/{userName}/browserByLabel")
-    public String browserByLabel(@PathVariable String userName,
-    					HttpServletResponse response,
-    					HttpServletRequest request,
-    					HttpSession session) throws DAOException {
-    	log.info("browser 请求目标用户："+userName);
-
-
-    	request.setAttribute("TargetUserName", userName);
-    	return "article/showArticle";
     }
 }

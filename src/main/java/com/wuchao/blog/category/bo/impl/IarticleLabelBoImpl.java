@@ -36,9 +36,9 @@ public class IarticleLabelBoImpl implements IarticleLabelBo {
 	}
 
 	@Override
-	public IarticleLabel getArticleLabel(int articleLabelId, int userId) throws DAOException {
+	public IarticleLabel getArticleLabel(int articleLabelId) throws DAOException {
 		// TODO Auto-generated method stub
-		return iarticleLableDao.getArticleLabel(articleLabelId, userId);
+		return iarticleLableDao.getArticleLabel(articleLabelId);
 	}
 
 	@Override
