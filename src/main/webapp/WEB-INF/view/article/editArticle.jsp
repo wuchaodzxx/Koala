@@ -29,7 +29,7 @@ a.hover-color:hover {
 .contentDiv:hover{color:#000;border:1px solid #169fe6;} /* 鼠标经过时的样式 */
 .touming{background: rgba(0, 0, 0, 0);}/* 设置透明 */
 </style>
-<title>新博客</title>
+<title>编辑</title>
 <script src="/Koala/layui/layui.js" charset="utf-8"></script>
 <script src="/Koala/js/jquery-3.2.1.min.js" charset="utf-8"></script>
 <script src="/Koala/ckeditor_full/ckeditor.js" charset="utf-8"></script>
@@ -44,7 +44,7 @@ show=function(obj){
 		<div style="float: right;background: rgba(0, 0, 0, 0);">
 			<ul class="layui-nav touming" lay-filter="">
 				<li class="layui-nav-item"><a href="/Koala/${user.username}/home">主页</a></li>
-				<li class="layui-nav-item layui-this"><a href="/Koala/newArticle">新博客</a></li>
+				<li class="layui-nav-item"><a href="/Koala/newArticle">新博客</a></li>
 				<li class="layui-nav-item"><a href="/Koala/manager">管理</a></li>
 				<li class="layui-nav-item"><a href="">联系</a></li>
 				<div style="display: inline-block;">
@@ -139,7 +139,10 @@ show=function(obj){
 			</p>
 		</div>
 	</div>
-
+	<div id="article_title" style="display:none;">${Article.title}</div>
+	<div id="article_content" style="display:none;">${Article.content}</div>
+	<div id="article_labelId" style="display:none;">${Article.labelId}</div>
+	<div id="article_id" style="display:none;">${Article.id}</div>
 	<script type="text/javascript" color="255,255,255" opacity='0.7'
 		zIndex="-2" count="200" src="/Koala/js/canvas-nest.js"></script>
 </body>
@@ -150,27 +153,16 @@ show=function(obj){
 	submit=function(){
 		var titleDiv = document.getElementById("articleTitle");
 		var labelDiv = document.getElementById("articleLabel");
+		var articleIdDiv = document.getElementById("article_id");
 		var content = CKEDITOR.instances.contentEdit.getData();
-		var articleTitle = titleDiv.value.replace(/(^\s*)|(\s*$)/g, "");
+		var articleTitle = titleDiv.value;
 		var articleLabelId = labelDiv.value;
-		if(articleTitle==""||articleTitle==null){
-			layui.use('layer', function(){
-				layer.msg('您似乎忘记输入标题啦！')
-			})
-			
-			return;
-		}
-		if(content.replace(/(^\s*)|(\s*$)/g, "")==""||content==null ){
-			layui.use('layer', function(){
-				layer.msg('内容不能为空哦！')
-			})
-			
-			return;
-		}
-		$.post("/Koala/newArticleSubmit",
+		var articleId = articleIdDiv.innerHTML;
+		$.post("/Koala/editArticleSubmit",
 		  {
 		    "articleTitle":articleTitle,
 		    "articleLabelId":articleLabelId,
+		    "articleId":articleId,
 		    "content":content
 		  },
 		  function(data,status){
@@ -195,7 +187,16 @@ show=function(obj){
 		});
 		
 	}
-	//cke_contentEdit
-	//var cke_contentEdit = document.getElementById('cke_contentEdit'); 
+
+	document.getElementById("articleTitle").value = document.getElementById("article_title").innerHTML;
+	CKEDITOR.instances.contentEdit.setData(document.getElementById("article_content").innerHTML); //contentEdit是textarea的id值
+	var labelId =  document.getElementById('article_labelId').innerHTML;
+	var options = document.getElementById("articleLabel").options;
+	for (i=0; i<options.length; i++){
+		if (options[i].value == labelId){	
+			options[i].selected = true;
+		}
+	}
+
 </script>
 </html>

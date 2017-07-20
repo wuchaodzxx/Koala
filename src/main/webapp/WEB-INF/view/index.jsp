@@ -51,7 +51,7 @@ a.hover-color:hover {
 	</div>
 	<div class='layui-main' style="width: 100%; height: 20px"></div>
 
-	<div class='main' style="width: 100%;">
+	<div class='main' style="width: 100%;min-height:400px">
 		
 		<div style="width: 70%; margin-left:5%;float:left">
 				<!-- 下面显示列表 -->

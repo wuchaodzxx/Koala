@@ -142,5 +142,24 @@ public class IarticleDaoImpl extends HibernateDaoSupport implements IarticleDao 
 		}	
 		return list;
 	}
+	@Override
+	public void deletIarticlesByLabelId(int labelId) throws DAOException {
+		try {
+	       String hql  = "delete from Iarticle where labelId = "+ labelId;
+	       getSession().createQuery(hql).executeUpdate(); 
+		}catch(Exception e) {
+			log.error(e.getMessage());
+			throw new DAOException();
+		}	
+	}
+	@Override
+	public void updateArticle(Iarticle iarticle) throws DAOException {
+		try {
+				this.getHibernateTemplate().update(iarticle);
+			}catch(Exception e) {
+				log.error(e.getMessage());
+				throw new DAOException();
+			}	
+	}
 
 }

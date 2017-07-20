@@ -70,4 +70,14 @@ public class IarticleBoImpl implements IarticleBo {
 		return iarticleDao.getArticleListByArticleLabelId(articleLabelId);
 	}
 
+	@Override
+	public void deletIarticlesByLabelId(int labelId) throws DAOException {
+		iarticleDao.deletIarticlesByLabelId(labelId);
+	}
+
+	@Override
+	public void updateArticle(Iarticle iarticle) throws DAOException {
+		iarticleDao.updateArticle(iarticle);
+	}
+
 }

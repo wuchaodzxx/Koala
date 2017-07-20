@@ -5,6 +5,7 @@ import com.wuchao.utils.exception.DAOException;
 
 public interface IuserDao {
 	public void addIuser(Iuser user) throws DAOException;
+	public void updateIuser(Iuser user) throws DAOException;
 	public Iuser getIuserByUsername(String username) throws DAOException;
 	
 }

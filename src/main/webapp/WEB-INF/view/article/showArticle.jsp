@@ -51,51 +51,65 @@ a.hover-color:hover {
 	</div>
 	<div class='layui-main' style="width: 100%; height: 20px"></div>
 
-	<div class='main' style="width: 100%;">
+	<div class='main' style="width: 100%;min-height:450px;height:auto;">
 		
-		<div style="width: 70%; margin-left:5%;float:left;background-color:#ffffff">
-				文章显示在这里	
-		</div>
-		<!-- 右侧边栏satrt -->
-		<div style="width: 20%; margin-left:2.5%;float:left;">
+		<!-- 左侧边栏satrt -->
+		<div style="width: 20%; margin-left:2%;float:left;">
 			<div class="row" style="width: 100%;">
 	      		<div class="span12" style="width: 100%;">
 			        <div class="panel panel-primary">
 			          <div class="panel-header clearfix">
-			            <h3 class="pull-left">公告</h3>
+			            <h3 class="pull-left">分类管理</h3>
 			          </div>
 			          <div class="panel-body" style="background-color:#f2f2f2">
-			            <p>昵称：${TargetUser.nickname}</p>
-			            <p>注册时间：<fmt:formatDate type="date" value="${TargetUser.createdate}" pattern="yyyy-MM-dd"/></p>
-			          </div>
-			        </div>
-			     </div>
-   			</div>
-   			<div class="row" style="width: 100%;">
-	      		<div class="span12" style="width: 100%;">
-			        <div class="panel">
-			          <div class="panel-header clearfix">
-			            <h3 class="pull-left">博客分类</h3>
-			          </div>
-			          <div class="panel-body">
-			            <c:forEach var="articleLabel" items="${ArticleLabelList}">
-			            	<a href="/Koala/${TargetUserName}/browserByLabel?articleLabelId=${articleLabel.id}">
-									<font style="font-size:15px;">${articleLabel.name}(${articleLabel.articleNum})</font>
-							</a>
-			            	<br/>
-			            	<br/>
-			            </c:forEach>
+			           		     <section contextmenu="mymenu">
+									<c:forEach var="articleLabel" items="${ArticleLabelList}">
+						            	<a href="/Koala/${TargetUserName}/browserByLabel?articleLabelId=${articleLabel.id}">
+											<font style="font-size:15px;">${articleLabel.name}(${articleLabel.articleNum})</font>
+										</a>
+						            	<br/><br/>
+						            </c:forEach>
+						            <font style="font-size:10px;color:#ff8800"> Tips:右键此处可编辑分类</font>
+								 </section>
+								<menu type="context" id="mymenu">
+									<menuitem label="编辑分类" onclick="javascript:window.location.href='/Koala/editArticleLabelRequest'" icon="/images/refresh-icon.png"></menuitem>
+								</menu>
 			          </div>
 			        </div>
 			     </div>
    			</div>
    			
 		</div>
-		<!-- 右侧边栏end -->
+		<!-- 左侧边栏end -->
+		
+		<!-- 编辑区域start -->
+		<div style="width: 74%; margin-left:2%;min-height:450px;float:left;">
+			<div id="title" style="margin-top:10px;">
+				<font style="font-family:'楷体';font-size:30px;color:#ffffff">标题：${Article.title}</font>
+			</div>
+			<br/>
+			<div id="cnblogs_post_body" style="background: rgba(0, 0, 0, 0.3);">
+			    <font style="font-family:'楷体';font-size:15px;color:#ffffff">${Article.content}</font>
+			    <br/><br/>
+			</div> 
+			<div>				
+				<div style="color:#ffffff;font-size:15px;float:right；margin-right:20px;">
+					posted @ 
+					<fmt:formatDate type="date" value="${Article.modifyDate}" pattern="yyyy-MM-dd HH:mm:ss"/>  
+						${Article.username} 阅读(${Article.browsers}) 评论(${Article.comments})  
+					<c:if test="${user != null}">
+						<c:if test="${user.id == Article.userId}">
+							<a href="/Koala/editArticle?articleId=${Article.id}"><font style="font-size:15px;color:#ffffff;margin-left:20px">编辑</font></a>
+						</c:if>
+					</c:if>
+				</div>
+			</div>
+			<br/><br/>
+		</div>
+		<!-- 编辑区域end -->
 	</div>
-	
 	<div class="layui-footer footer footer-doc"
-		style="text-align: center; width: 100%; height: 100px; BACKGROUND-COLOR: transparent;clear:both">
+		style="text-align: center; margin-top:20px;width: 100%; height: 100px; BACKGROUND-COLOR: transparent;clear:both">
 		<div class="layui-main" style="BACKGROUND-COLOR: transparent">
 			<p>
 				<font style="color: #ffffff">Copyright © 吴超的博客 2017
@@ -115,5 +129,6 @@ a.hover-color:hover {
 	
 	<script type="text/javascript" color="255,255,255" opacity='0.7'
 		zIndex="-2" count="200" src="/Koala/js/canvas-nest.js"></script>
+	<script src="/Koala/js/cnblog_wuchao_v3.js" charset="utf-8"></script>
 </body>
 </html>

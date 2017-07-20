@@ -61,5 +61,14 @@ public class IuserDaoImpl extends HibernateDaoSupport implements IuserDao {
 		}
 		return iuser;
 	}
+	@Override
+	public void updateIuser(Iuser user) throws DAOException {
+		try {
+			this.getHibernateTemplate().update(user);
+		}catch(Exception e) {
+			throw new DAOException();
+		}
+		
+	}
 
 }

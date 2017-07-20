@@ -36,7 +36,28 @@ body {
 </script>
 </head>
 <body class='layui-bg-black'>
-	<div class='layui-main' style="width: 400px; height: 150px"></div>
+		<div class='layui-main' style="width: 100%; ">
+		<div style="float: right;BACKGROUND-COLOR: transparent">
+			<ul class="layui-nav" lay-filter="" style="BACKGROUND-COLOR: transparent">
+				<li class="layui-nav-item">
+					<a href="/Koala/login">
+						<font style="font-weight:bold;">登录</font>
+					</a>
+				</li>
+				<div class="layui-nav" style="margin-left:-20px;display: inline-block;BACKGROUND-COLOR: transparent">
+					<div class="layui-inline" style="margin-top: 6px;BACKGROUND-COLOR: transparent">
+						<div class="layui-inline" style="width: 40px; height: 40px;BACKGROUND-COLOR: transparent">
+							<img style="width: 100%;"
+								src="/Koala/resources/images/tagIco/portrait50px.png"
+								class="layui-circle">
+						</div>
+					</div>
+				</div>
+			</ul>
+
+		</div>
+	</div>
+	<div class='layui-main' style="width: 400px; height: 100px"></div>
 	<div class='layui-main' style="width: 400px">
 		<form class="layui-form" style="BACKGROUND-COLOR: transparent" action="/Koala/register">
 			<table class="" style="BACKGROUND-COLOR: transparent">
@@ -66,6 +87,11 @@ body {
 									class="layui-input" type="tel" >
 							</div>
 						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td><div  style="height: 10px"></div></td>
+						<td></td>
 						<td></td>
 					</tr>
 					<tr>
@@ -156,7 +182,25 @@ body {
 
 		</form>
 	</div>
-
+	<div class='layui-main' style="width: 400px; height: 200px"></div>
+	<div class="layui-footer footer footer-doc"
+		style="text-align: center; width: 100%; height: 100px; BACKGROUND-COLOR: transparent;clear:both">
+		<div class="layui-main" style="BACKGROUND-COLOR: transparent">
+			<p>
+				<font style="color: #ffffff">Copyright © 吴超的博客 2017
+					&nbsp;|&nbsp;访问量:${Isystem.amountOfAccess } </font>
+			</p>
+			<div class='layui-main' style="width: 100%; height: 10px"></div>
+			<p class="hover-color">
+				<img style="" src="/Koala/resources/images/tagIco/boke30px.png">
+				<a href="http://www.cnblogs.com/wuchaodzxx/" target="_blank"><font
+					style="color: #ffffff">博客园</font></a> &nbsp;&nbsp; <img style=""
+					src="/Koala/resources/images/tagIco/git30px.png"> <a
+					href="https://github.com/wuchaodzxx" target="_blank"><font
+					style="color: #ffffff">Git仓库</font></a>
+			</p>
+		</div>
+	</div>
 
 	<script src="/Koala/layui/layui.js" charset="utf-8"></script>
 	<script src="/Koala/js/Md5Util.js" charset="utf-8"></script>

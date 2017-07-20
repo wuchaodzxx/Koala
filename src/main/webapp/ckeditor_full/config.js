@@ -11,7 +11,7 @@ CKEDITOR.editorConfig = function(config) {
 	// 自定义配置
 
 	config.image_previewText = ' '; // 预览区域显示内容
-	config.filebrowserImageUploadUrl = "/share/private/imageUpload.do"; // 要上传的action或servlet
+	config.filebrowserImageUploadUrl = "/Koala/imageUpload"; // 要上传的action或servlet
 	config.height = 400; // 高度
 	config.resize_enabled = false;// 取消 “拖拽以改变尺寸”
 	config.enterMode = CKEDITOR.ENTER_BR;

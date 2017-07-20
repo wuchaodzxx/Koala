@@ -14,4 +14,6 @@ public interface IarticleDao {
 	public void deleteIarticle(int id)throws DAOException;
 	public int getAllRowCount(String username)throws DAOException;
 	public List<Iarticle> getArticleListByArticleLabelId(int articleLabelId)throws DAOException;
+	public void deletIarticlesByLabelId(int labelId)throws DAOException;
+	public void updateArticle(Iarticle iarticle)throws DAOException;
 }

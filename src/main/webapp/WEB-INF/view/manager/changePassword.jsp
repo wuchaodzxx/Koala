@@ -6,12 +6,12 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>登陆</title>
+<title>密码修改</title>
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
-<link href="/Koala/resources/images/tagIco/login.png"
+<link href="/Koala/resources/images/tagIco/zhuce.png"
 	type="image/x-icon" rel="shortcut icon">
 <link rel="stylesheet" href="/Koala/layui/css/layui.css"
 	media="all">
@@ -36,17 +36,16 @@ body {
 </script>
 </head>
 <body class='layui-bg-black'>
-		<div class='layui-main' style="width: 100%; ">
-		<div style="float: right;BACKGROUND-COLOR: transparent">
-			<ul class="layui-nav" lay-filter="" style="BACKGROUND-COLOR: transparent">
-				<li class="layui-nav-item">
-					<a href="/Koala/register">
-						<font style="font-weight:bold;">注册</font>
-					</a>
-				</li>
-				<div class="layui-nav" style="margin-left:-20px;display: inline-block;BACKGROUND-COLOR: transparent">
-					<div class="layui-inline" style="margin-top: 6px;BACKGROUND-COLOR: transparent">
-						<div class="layui-inline" style="width: 40px; height: 40px;BACKGROUND-COLOR: transparent">
+	<div class='layui-main' style="width: 100%; height: 80px">
+		<div style="float: right">
+			<ul class="layui-nav" lay-filter="" >
+				<li class="layui-nav-item"><a href="/Koala/${user.username}/home">主页</a></li>
+				<li class="layui-nav-item layui-this"><a href="/Koala/changePasswordRequest">修改密码</a></li>
+				<li class="layui-nav-item " ><a href="/Koala/changeUserInfo">个人资料</a></li>
+				<li class="layui-nav-item"><a href="/Koala/logout">注销</a></li>
+				<div class="layui-nav" style="display: inline-block;">
+					<div class="layui-inline " style="margin-top: 6px;">
+						<div class="layui-inline" style="width: 40px; height: 40px">
 							<img style="width: 100%;"
 								src="/Koala/resources/images/tagIco/portrait50px.png"
 								class="layui-circle">
@@ -54,12 +53,11 @@ body {
 					</div>
 				</div>
 			</ul>
-
 		</div>
 	</div>
-	<div class='layui-main' style="width: 400px; height: 150px"></div>
-	<div class='layui-main' style="width: 400px;height:212px;">
-		<form class="layui-form" style="BACKGROUND-COLOR: transparent" action="">
+	<div class='layui-main' style="width: 400px; height: 90px"></div>
+	<div class='layui-main' style="width: 400px">
+		<form class="layui-form" style="BACKGROUND-COLOR: transparent" action="/Koala/changePasswordSubmit">
 			<table class="" style="BACKGROUND-COLOR: transparent">
 				<tbody>
 					<tr>
@@ -78,7 +76,7 @@ body {
 					<tr>
 						<td>
 							<label class="layui-form-label">
-								<font color="#FFFFFF" style="font-family:SimHei">用户名</font>
+								<font color="#FFFFFF" style="font-family:SimHei">账号</font>
 							</label>
 						</td>
 						<td>
@@ -87,6 +85,26 @@ body {
 									class="layui-input" type="tel" >
 							</div>
 						</td>
+						<td></td>
+					</tr>						
+					<tr>
+						<td><div  style="height: 10px"></div></td>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<label class="layui-form-label">
+								<font color="#FFFFFF" style="font-family:SimHei">原始密码</font>
+							</label>
+						</td>
+						<td>
+							<div class="layui-input-inline">
+								<input id="oldpassword" name="oldpassword" lay-verify="required" autocomplete="off"
+									class="layui-input" type="password">
+							</div>
+						</td>
+
 						<td></td>
 					</tr>
 					<tr>
@@ -97,18 +115,18 @@ body {
 					<tr>
 						<td>
 							<label class="layui-form-label">
-								<font color="#FFFFFF" style="font-family:SimHei">密码</font>
+								<font color="#FFFFFF" style="font-family:SimHei">新密码</font>
 							</label>
 						</td>
 						<td>
 							<div class="layui-input-inline">
-								<input id="password" name="password" lay-verify="required" autocomplete="off"
+								<input id="newpassword" name="newpassword" lay-verify="required" autocomplete="off"
 									class="layui-input" type="password">
 							</div>
 						</td>
 
 						<td></td>
-					</tr>
+					</tr>					
 					<tr>
 						<td><div  style="height: 10px"></div></td>
 						<td></td>
@@ -128,7 +146,7 @@ body {
 						</td>
 						<td>
 							<div style="margin-left:10px">
-								<img id="varifyCodeID" style="opacity:0.4" onclick="reloadVaryfiCode()" src="/Koala/login/getVerifyCode" alt="" />
+								<img id="varifyCodeID" onclick="reloadVaryfiCode()" src="/Koala/login/getVerifyCode" alt="" />
 							</div>
 						</td>
 					</tr>
@@ -143,7 +161,7 @@ body {
 
 		</form>
 	</div>
-	<div class='layui-main' style="width: 400px; height: 200px"></div>
+	<div class='layui-main' style="width: 400px; height: 130px"></div>
 	<div class="layui-footer footer footer-doc"
 		style="text-align: center; width: 100%; height: 100px; BACKGROUND-COLOR: transparent;clear:both">
 		<div class="layui-main" style="BACKGROUND-COLOR: transparent">
@@ -162,6 +180,7 @@ body {
 			</p>
 		</div>
 	</div>
+
 	<script src="/Koala/layui/layui.js" charset="utf-8"></script>
 	<script src="/Koala/js/Md5Util.js" charset="utf-8"></script>
 	<script>
@@ -173,8 +192,11 @@ body {
 
 							//监听提交
 							form.on('submit(demo1)', function(data) {
-								var password = hex_md5(data.field.password,32);
-								document.getElementById("password").value = password;
+								var oldpassword = hex_md5(data.field.oldpassword,32);
+								var newpassword = hex_md5(data.field.newpassword,32);
+
+								document.getElementById("oldpassword").value = oldpassword;
+								document.getElementById("newpassword").value = newpassword;
 								return true;
 							});
 

@@ -39,4 +39,11 @@ public class IuserBoImpl implements IuserBo {
 		
 	}
 
+
+	@Override
+	public void updateIuser(Iuser user) throws DAOException {
+		// TODO Auto-generated method stub
+		iuserDao.updateIuser(user);
+	}
+
 }
