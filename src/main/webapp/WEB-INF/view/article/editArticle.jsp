@@ -46,6 +46,7 @@ show=function(obj){
 				<li class="layui-nav-item"><a href="/Koala/${user.username}/home">主页</a></li>
 				<li class="layui-nav-item"><a href="/Koala/newArticle">新博客</a></li>
 				<li class="layui-nav-item"><a href="/Koala/manager">管理</a></li>
+				<li class="layui-nav-item"><a href="/Koala/logout">注销</a></li>
 				<li class="layui-nav-item"><a href="">联系</a></li>
 				<div style="display: inline-block;">
 					<div class="layui-inline " style="margin-top: 6px;">

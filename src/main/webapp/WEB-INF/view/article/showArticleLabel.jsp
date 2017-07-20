@@ -34,7 +34,13 @@ a.hover-color:hover {
 			<ul class="layui-nav touming" lay-filter="">
 				<li class="layui-nav-item"><a href="/Koala/${TargetUserName}/home">主页</a></li>
 				<li class="layui-nav-item "><a href="/Koala/newArticle">新博客</a></li>
-				<li class="layui-nav-item"><a href="/Koala/manager">管理</a></li>
+				<c:if test="${user == null}">
+					<li class="layui-nav-item"><a href="/Koala/login">登录</a></li>
+				</c:if>
+				<c:if test="${user != null}">
+					<li class="layui-nav-item"><a href="/Koala/manager">管理</a></li>
+					<li class="layui-nav-item"><a href="/Koala/logout">注销</a></li>
+				</c:if>
 				<li class="layui-nav-item"><a href="">联系</a></li>
 				<div style="display: inline-block;">
 					<div class="layui-inline " style="margin-top: 6px;">

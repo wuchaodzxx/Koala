@@ -7,4 +7,5 @@ public interface IuserBo {
 	public void addIuser(Iuser user) throws DAOException;
 	public void updateIuser(Iuser user) throws DAOException;
 	public Iuser getIuserByUsername(String username) throws DAOException;
+	public Iuser getIuserByUserId(int userId) throws DAOException;
 }

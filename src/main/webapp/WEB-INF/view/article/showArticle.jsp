@@ -34,7 +34,13 @@ a.hover-color:hover {
 			<ul class="layui-nav touming" lay-filter="">
 				<li class="layui-nav-item"><a href="/Koala/${TargetUserName}/home">主页</a></li>
 				<li class="layui-nav-item "><a href="/Koala/newArticle">新博客</a></li>
-				<li class="layui-nav-item"><a href="/Koala/manager">管理</a></li>
+				<c:if test="${user == null}">
+					<li class="layui-nav-item"><a href="/Koala/login">登录</a></li>
+				</c:if>
+				<c:if test="${user != null}">
+					<li class="layui-nav-item"><a href="/Koala/manager">管理</a></li>
+					<li class="layui-nav-item"><a href="/Koala/logout">注销</a></li>
+				</c:if>
 				<li class="layui-nav-item"><a href="">联系</a></li>
 				<div style="display: inline-block;">
 					<div class="layui-inline " style="margin-top: 6px;">
@@ -105,6 +111,48 @@ a.hover-color:hover {
 				</div>
 			</div>
 			<br/><br/>
+			<!-- 评论区域start -->
+		    <div class="comments" style="color:#ffffff">
+		      <header>
+		        <div class="pull-right"><a href="#commentReplyForm2" class="btn btn-primary"><i class="icon-comment-alt"></i> 发表评论</a></div>
+		        <h3>所有评论</h3>
+		       
+		      </header>
+		      <section class="comments-list">
+		          <c:forEach var="articleComment" items="${ArticleCommentList}">
+		           		<hr>
+						<div class="comment">
+				          <div class="content">
+				            <div class="pull-right text-muted"><fmt:formatDate type="date" value="${articleComment.commentDate}" pattern="yyyy-MM-dd HH:mm:ss"/>  </div>
+				            <div><a href="###"><strong>${articleComment.commentUserNickName}</strong></a></div>
+				            		<c:if test="${articleComment.commentTargetUserId != 0}">
+				            			<span class="text-muted">回复</span> <a href="###">${articleComment.commentTargetUserNickName}</a></div>
+				            		</c:if>
+				            <div class="text">${articleComment.content}</div>
+				            <div class="actions">
+				              <a href="javascript:void(0);" onclick="reply(${articleComment.commentUserId});">回复</a>
+				            </div>
+				         </div>
+				         <br/>
+					</c:forEach>
+		      </section>
+		      <footer style="width:80%">
+		        <div class="reply-form" id="commentReplyForm2">
+		          <a href="###" class="avatar"><i class="icon-user icon-2x"></i></a>
+		          <form class="form">
+		            <div class="form-group" style="color:#000000">
+		              <textarea id="commentContent" style="width:98%" class="form-control new-comment-text" rows="2" placeholder="撰写评论..."></textarea>
+		            </div>
+		       
+		          </form>
+		        </div>
+		        <br/>
+		    	<button style="float:right" class="layui-btn layui-btn-small" type="button" onclick="submitComment()">提交</button>
+		      </footer>
+		    </div>
+
+			
+			<!-- p评论区域end -->
 		</div>
 		<!-- 编辑区域end -->
 	</div>
@@ -126,9 +174,89 @@ a.hover-color:hover {
 			</p>
 		</div>
 	</div>
-	
+	<div id="articleId" style="display:none">${Article.id}</div>
+	<div id="targetUserName" style="display:none">${TargetUserName}</div>
 	<script type="text/javascript" color="255,255,255" opacity='0.7'
 		zIndex="-2" count="200" src="/Koala/js/canvas-nest.js"></script>
 	<script src="/Koala/js/cnblog_wuchao_v3.js" charset="utf-8"></script>
 </body>
+<script>
+submitComment=function(){
+	var articleId = document.getElementById("articleId").innerHTML;
+	var targetUserName = document.getElementById("targetUserName").innerHTML;
+	var content = document.getElementById("commentContent").value;
+	//alert(articleId+":"+content);
+	$.post("/Koala/articleCommentSubmit",
+	  {
+	    "articleId":articleId,
+	    "content":content
+	  },
+	  function(data,status){
+		  if(data=="success"){
+				layui.use('layer', function(){
+					  var layer = layui.layer;
+					  layer.msg('提交成功！', {
+						  time: 0 //不自动关闭
+						  ,btn: ['确定']
+						  ,yes: function(index){
+							  layer.close(index);
+							  window.location.href="/Koala/"+targetUserName+"/browser?articleId="+articleId;
+						  }
+						});
+					}); 
+		  }else{
+				layui.use('layer', function(){
+					  var layer = layui.layer;
+					  layer.msg('对不起，提交失败。失败原因：'+data);
+					}); 
+		  }
+	});
+}
+reply=function(commentTargetUserId){
+	var targetUserName = document.getElementById("targetUserName").innerHTML;
+	var articleId = document.getElementById("articleId").innerHTML;
+	layui.use('layer', function(){
+		layer.prompt({
+			  formType: 2,
+			  value: '',
+			  title: '评论',
+			  area: ['600px', '100px'] //自定义文本域宽高
+			}, function(value, index, elem){
+			  //alert(commentTargetUserId);
+			  //alert(value); //得到value
+			  layer.close(index);
+			  $.post("/Koala/articleCommentSubmit",
+						  {
+						    "articleId":articleId,
+						    "content":value,
+						    "commentTargetUserId":commentTargetUserId
+						  },
+						  function(data,status){
+							  //alert(data+":"+status);
+							  if(data=="success"){
+									layui.use('layer', function(){
+										  var layer = layui.layer;
+										  layer.msg('提交成功！', {
+											  time: 0 //不自动关闭
+											  ,btn: ['确定']
+											  ,yes: function(index){
+												  layer.close(index);
+												  window.location.href="/Koala/"+targetUserName+"/browser?articleId="+articleId;
+											  }
+											});
+										}); 
+							  }else{
+									layui.use('layer', function(){
+										  var layer = layui.layer;
+										  layer.msg('对不起，提交失败。失败原因：'+data);
+										}); 
+							  }
+						});
+			});
+		}); 
+	
+}
+</script>
+
+
 </html>

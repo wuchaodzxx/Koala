@@ -2,6 +2,8 @@ package com.wuchao.blog.article.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +25,8 @@ import com.wuchao.blog.article.bo.intf.IarticleBo;
 import com.wuchao.blog.article.po.Iarticle;
 import com.wuchao.blog.category.bo.intf.IarticleLabelBo;
 import com.wuchao.blog.category.po.IarticleLabel;
+import com.wuchao.blog.comment.bo.intf.IarticleCommentBo;
+import com.wuchao.blog.comment.po.IarticleComment;
 import com.wuchao.blog.file.bo.intf.FileUpLoadService;
 import com.wuchao.blog.user.bo.intf.IuserBo;
 import com.wuchao.blog.user.controller.ManagerController;
@@ -47,6 +51,9 @@ public class ArticleController {
 	
 	@Resource(name="fileUpLoadService")
 	public FileUpLoadService fileUpLoadService;
+	
+	@Resource(name="iarticleCommentBo")
+	public IarticleCommentBo iarticleCommentBo;
 	
 	/*
 	 * 接受ajax请求 查询用户记录总数
@@ -105,8 +112,22 @@ public class ArticleController {
         	return "errors/articleNotFound";
         }
         //新博客浏览人数+1
-        article.setComments(article.getComments()+1);
+        article.setBrowsers(article.getBrowsers()+1);
         iarticleBo.updateArticle(article);
+        
+        List<IarticleComment> iarticleCommentList= iarticleCommentBo.getIarticleCommentList(article.getId());
+        
+        //评论按照时间排序
+        Collections.sort(iarticleCommentList, new Comparator<IarticleComment>() {  
+        	//按照时间，时间越早，排在前面
+            public int compare(IarticleComment o1, IarticleComment o2) {  
+                if(o1.getCommentDate().getTime()>o1.getCommentDate().getTime()) {
+                	return -1;
+                }else {
+                    return 1;
+                }
+            }  
+        }); 
         
     	//获取目标用户信息，便于index.jsp展示
     	Iuser targetUser = iuserBo.getIuserByUsername(userName);
@@ -119,6 +140,7 @@ public class ArticleController {
     	request.setAttribute("TargetUserName", userName);
         request.setAttribute("TargetUser", targetUser);       
         request.setAttribute("ArticleLabelList", articleLabelList);
+        request.setAttribute("ArticleCommentList", iarticleCommentList);
     	return "article/showArticle";
     }
     //${TargetUserName}/browserByLabel
