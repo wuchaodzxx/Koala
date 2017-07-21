@@ -95,8 +95,11 @@ a.hover-color:hover {
 			</div>
 			<br/>
 			<div id="cnblogs_post_body" style="background: rgba(0, 0, 0, 0.3);">
-			    <font style="font-family:'楷体';font-size:15px;color:#ffffff">${Article.content}</font>
-			    <br/><br/>
+				<div style="margin:0px 20px 0px 20px">
+					<br/>
+					<font style="font-family:'楷体';font-size:15px;color:#ffffff">${Article.content}</font>
+			    	<br/><br/>
+				</div>
 			</div> 
 			<div>				
 				<div style="color:#ffffff;font-size:15px;float:right；margin-right:20px;">
