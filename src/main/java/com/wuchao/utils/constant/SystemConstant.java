@@ -5,5 +5,5 @@ package com.wuchao.utils.constant;
  */
 public class SystemConstant {
 	//分页，每页显示的记录数目
-	public static int PAGE_SIZE=2;;
+	public static int PAGE_SIZE=4;
 }
