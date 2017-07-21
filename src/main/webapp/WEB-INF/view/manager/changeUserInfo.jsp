@@ -108,19 +108,6 @@ td
 					</div>
 				</div>
 			</div>
-		
-			<!-- 头像上传 -->
-			<div>
-				<div class="site-demo-upload">
-				  <div class="site-demo-upbar">
-				    <div class="layui-box layui-upload-button"><form target="layui-upload-iframe" method="get" key="set-mine" enctype="multipart/form-data" action="/test/upload.json"><input name="file" class="layui-upload-file" id="test" type="file"></form><span class="layui-upload-icon"><i class="layui-icon"></i>上传图片</span></div>
-				  </div>
-				</div>
-			</div>	
-			<!-- 基本资料修改 -->
-			<div>
-			
-			</div>		
 		</div>
 		<!-- 显示区end -->
 	</div>

@@ -159,4 +159,11 @@ public class ManagerController{
     	}
     	return "manager/changeUserInfo";
     }
+	//关于
+    @RequestMapping("/about")
+    public String about(HttpServletResponse response,HttpServletRequest request,HttpSession session) throws DAOException {
+    	log.info("关于");
+    
+    	return "about/about";
+    }
 }

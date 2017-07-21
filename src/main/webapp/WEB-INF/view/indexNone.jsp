@@ -32,7 +32,7 @@ a.hover-color:hover {
 	<div class='layui-main touming' style="width: 100%; height: 80px;">
 		<div style="float: right;background: rgba(0, 0, 0, 0);">
 			<ul class="layui-nav touming" lay-filter="">
-				<li class="layui-nav-item layui-this"><a href="/Koala/${TargetUserName}/home">主页</a></li>
+				<li class="layui-nav-item layui-this"><a href="/Koala/">主页</a></li>
 				<li class="layui-nav-item "><a href="/Koala/newArticle">新博客</a></li>
 				<c:if test="${user == null}">
 					<li class="layui-nav-item"><a href="/Koala/login">登录</a></li>
@@ -59,14 +59,14 @@ a.hover-color:hover {
 
 	<div class='main' style="width: 100%;min-height:400px">
 		
-		<div style="width: 70%; margin-left:5%;float:left">
+		<div style="width: 70%; margin-left:15%;float:left">
 				<!-- 下面显示列表 -->
 				<div id="list" class='layui-main touming' style="width: 100%;">
 					<c:forEach var="article" items="${page.list}">
 						<div class="contentDiv">
 							<fieldset class="layui-elem-field layui-field-title">
 								<blockquote class="layui-elem-quote">
-									<a href="/Koala/${TargetUserName}/browser?articleId=${article.id}">
+									<a href="/Koala/${article.username}/browser?articleId=${article.id}">
 										<font style="font-size:20px;">${article.title}</font>
 									</a>
 								</blockquote>
@@ -74,7 +74,7 @@ a.hover-color:hover {
 									<div class="layui-field-box" style="color:#ffffff">
 										<div>
 											摘要：${article.abstractsDesc}
-											<a href="/Koala/${TargetUserName}/browser?articleId=${article.id}" style="font-size:20px;color:#169fe6">
+											<a href="/Koala/${article.username}/browser?articleId=${article.id}" style="font-size:20px;color:#169fe6">
 												阅读全文
 											</a>
 										</div>
@@ -91,42 +91,6 @@ a.hover-color:hover {
 					<div id="PagingBar"></div>
 				</div>
 			</div>
-			<!-- 右侧边栏satrt -->
-			<div style="width: 20%; margin-left:2.5%;float:left;">
-				<div class="row" style="width: 100%;">
-		      		<div class="span12" style="width: 100%;">
-				        <div class="panel panel-primary">
-				          <div class="panel-header clearfix">
-				            <h3 class="pull-left">公告</h3>
-				          </div>
-				          <div class="panel-body" style="background-color:#f2f2f2">
-				            <p>昵称：${TargetUser.nickname}</p>
-				            <p>注册时间：<fmt:formatDate type="date" value="${TargetUser.createdate}" pattern="yyyy-MM-dd"/></p>
-				          </div>
-				        </div>
-				     </div>
-    			</div>
-    			<div class="row" style="width: 100%;">
-		      		<div class="span12" style="width: 100%;">
-				        <div class="panel">
-				          <div class="panel-header clearfix">
-				            <h3 class="pull-left">博客分类</h3>
-				          </div>
-				          <div class="panel-body">
-				            <c:forEach var="articleLabel" items="${ArticleLabelList}">
-				            	<a href="/Koala/${TargetUserName}/browserByLabel?articleLabelId=${articleLabel.id}">
-										<font style="font-size:15px;">${articleLabel.name}(${articleLabel.articleNum})</font>
-								</a>
-				            	<br/>
-				            	<br/>
-				            </c:forEach>
-				          </div>
-				        </div>
-				     </div>
-    			</div>
-    			
-			</div>
-			<!-- 右侧边栏end -->
 	</div>
 
 
@@ -183,7 +147,7 @@ a.hover-color:hover {
 				if(first){
 					//alert("first");
 				}else{
-					window.location.href="/Koala/"+username+"/home?currentPage="+obj.curr+"&totalPages="+totalPages;
+					window.location.href="/Koala?currentPage="+obj.curr+"&totalPages="+totalPages;
 				}
 
 			}

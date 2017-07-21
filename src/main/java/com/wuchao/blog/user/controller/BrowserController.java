@@ -88,6 +88,45 @@ public class BrowserController {
     	return "index";
     }
     /*
+     * 没有指定路径的请求
+     */
+    @RequestMapping("/")
+    public String noneRequest(
+    					HttpServletResponse response,
+    					HttpServletRequest request,
+    					HttpSession session) throws DAOException {
+
+    	log.info("请求noneRequest：noneRequest");
+    	
+    	int pageSize = SystemConstant.PAGE_SIZE;//每页显示数目
+    	int currentPage = 1;//默认当前页
+    	int totalPages = 1;//默认总页数
+    	
+    	if(request.getParameter("currentPage")!=null) {
+    		currentPage = Integer.parseInt((String) request.getParameter("currentPage"));
+    	}
+    	if(request.getParameter("totalPages")!=null) {
+    		totalPages = Integer.parseInt((String) request.getParameter("totalPages"));
+    	}else {
+    		int totalRowCount = iarticleBo.getAllRowCount();
+    		totalPages = (int) Math.ceil(totalRowCount/(double)pageSize);//向上取整
+    	}
+    	log.info("请求参数：totalPages="+totalPages+",currentPage="+currentPage+",pageSize="+pageSize);
+    	
+    	Page page = iarticleBo.queryPage(Integer.valueOf(currentPage), pageSize);
+        
+
+        List<Iarticle> articleList = page.getList();
+        request.setAttribute("page", page);
+        request.setAttribute("pageSize", pageSize);
+        request.setAttribute("articleList", articleList);
+        request.setAttribute("currentPage", currentPage);
+        request.setAttribute("totalPages", totalPages);
+
+        
+    	return "indexNone";
+    }   
+    /*
      * 请求index.jsp页面,请求路径中不含用户名的请求方式
      */
     @RequestMapping("/home")

@@ -80,4 +80,28 @@ public class IarticleBoImpl implements IarticleBo {
 		iarticleDao.updateArticle(iarticle);
 	}
 
+	@Override
+	public Page<Iarticle> queryPage(int currentPage,int pageSize) throws DAOException {
+		Page page = new Page();        
+        //总记录数
+        int allRow = iarticleDao.getAllRowCount();
+        //当前页开始记录
+        int offset = page.countOffset(currentPage,pageSize);  
+        //分页查询结果集
+        List<Iarticle> list = iarticleDao.queryPage(offset, pageSize); 
+
+        page.setPageNo(currentPage);
+        page.setPageSize(pageSize);
+        page.setTotalRecords(allRow);
+        page.setList(list);
+        
+        return page;
+	}
+
+	@Override
+	public int getAllRowCount() throws DAOException {
+		// TODO Auto-generated method stub
+		return iarticleDao.getAllRowCount();
+	}
+
 }

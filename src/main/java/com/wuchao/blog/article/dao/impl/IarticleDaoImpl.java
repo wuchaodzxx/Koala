@@ -18,6 +18,7 @@ import com.wuchao.blog.article.dao.intf.IarticleDao;
 import com.wuchao.blog.article.po.Iarticle;
 import com.wuchao.blog.user.controller.LoginController;
 import com.wuchao.utils.exception.DAOException;
+import com.wuchao.utils.page.Page;
 @Repository("iarticleDao")
 public class IarticleDaoImpl extends HibernateDaoSupport implements IarticleDao {
 	private static Logger log = Logger.getLogger(LoginController.class);  
@@ -160,6 +161,34 @@ public class IarticleDaoImpl extends HibernateDaoSupport implements IarticleDao 
 				log.error(e.getMessage());
 				throw new DAOException();
 			}	
+	}
+	@Override
+	public List<Iarticle> queryPage(int offset, int length) throws DAOException {
+		List<Iarticle>  list = null;
+		try {
+			 Query query = getSession().createQuery("from Iarticle a  order by a.modifyDate desc");
+			 query.setFirstResult(offset);
+	         query.setMaxResults(length);
+	         list = query.list();
+		}catch(Exception e) {
+			log.error(e.getMessage());
+			throw new DAOException();
+		}
+		return  list;
+	}
+	@Override
+	public int getAllRowCount() throws DAOException {
+		try {
+	        String hql = "select count(*) from Iarticle as a";  
+	        Query query =  getSession().createQuery(hql);  
+	        Long lo=(Long)query.uniqueResult();  
+	        Integer intge=new Integer(String.valueOf(lo));  
+	        return intge;   
+	        
+		}catch(Exception e) {
+			log.error(e.getMessage());
+			throw new DAOException();
+		}
 	}
 
 }
