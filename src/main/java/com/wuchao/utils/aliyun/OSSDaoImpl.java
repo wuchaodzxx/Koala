@@ -15,8 +15,8 @@ import com.aliyun.oss.model.PutObjectResult;
 
 @Repository("ossDao")
 public class OSSDaoImpl implements OSSDao{
-	static String accessKeyId = "dawdwddwadw";
-	static String accessKeySecret = "hPC3Y4aefasefesafase0VAFdikIsCd";//已改成虚假的id和key，防止github被窃取
+	static String accessKeyId = "";
+	static String accessKeySecret = "";//已改成虚假的id和key，防止github被窃取
 	// 以杭州为例
 	//static String endpoint = "http://oss-cn-qingdao-internal.aliyuncs.com"; //内网址
 	static String endpoint = "http://oss-cn-qingdao.aliyuncs.com";  //外网址
